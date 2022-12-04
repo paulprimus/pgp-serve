@@ -1,4 +1,5 @@
 mod web;
+mod reader;
 
 use clap::{Parser, Subcommand};
 use anyhow::{Context, Result};

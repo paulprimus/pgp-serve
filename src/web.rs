@@ -4,9 +4,10 @@ use tower::{ServiceBuilder};
 use tower_http::{compression::CompressionLayer, sensitive_headers::SetSensitiveHeadersLayer};
 use axum::{http, Router, routing::{get}, response::{IntoResponse, Response}};
 
-use tokio::signal;
-#[cfg(windows)]
-use signal::windows;
+// use tokio::signal;
+// #[cfg(windows)]
+// use signal::windows;
+use crate::reader;
 
 
 pub async fn start() -> Result<()> {
@@ -39,17 +40,8 @@ async fn get_head_handler() -> Response {
 
     // then do some computing task in GET
     // do_some_computing_task();
-    hyper::
-    ([(http::header::AUTHORIZATION.as_str(), "paul"),("X-PGP", "test") ]).into_response()
+    let x = reader::read().await.unwrap();
+    tracing::debug!("{}",x);
+    ([(http::header::AUTHORIZATION.as_str(), "paul"),("X-PGP", x.as_str()) ]).into_response()
 }
 
-// async fn shutdown_signal() {
-//    let ctrl_c =
-//        signal::ctrl_c().await.expect("CTLR_C Signal fehlgeschlagen!");
-//
-//
-//    #[cfg!(target_family="windows")]
-//     let terminate {
-//        windows::S
-//    }
-// }
