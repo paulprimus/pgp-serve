@@ -2,7 +2,10 @@ use std::net::SocketAddr;
 use anyhow::{Result};
 use tower::{ServiceBuilder};
 use tower_http::{compression::CompressionLayer, sensitive_headers::SetSensitiveHeadersLayer};
-use axum::{http, Router, routing::{get}, response::{IntoResponse, Response}};
+use axum::{http, Router, routing::{get}, response::{IntoResponse, Response}, body::{Body, BoxBody}};
+
+
+
 
 // use tokio::signal;
 // #[cfg(windows)]
@@ -31,17 +34,14 @@ fn app() -> Router {
 
 // GET routes will also be called for HEAD requests but will have the response body removed.
 // You can handle the HEAD method explicitly by extracting `http::Method` from the request.
-async fn get_head_handler() -> Response {
-    // it usually only makes sense to special-case HEAD
-    // if computing the body has some relevant cost
-    // if method == http::Method::HEAD {
-    //         ([(http::header::AUTHORIZATION.as_str(), "paul"),("X-PGP", "test") ]).into_response();
-    // }
+async fn get_head_handler() -> Response<BoxBody> {
 
-    // then do some computing task in GET
-    // do_some_computing_task();
     let x = reader::read().await.unwrap();
-    tracing::debug!("{}",x);
-    ([(http::header::AUTHORIZATION.as_str(), "paul"),("X-PGP", x.as_str()) ]).into_response()
+    Response::builder()
+        .header(http::header::AUTHORIZATION, "PGP")
+        .header("X-PRIMUS", "Paul")
+        .body(axum::body::boxed(Body::from(x)))
+        .unwrap()
+
 }
 
