@@ -3,6 +3,7 @@ mod reader;
 
 use clap::{Parser, Subcommand};
 use anyhow::{Context, Result};
+use dotenv;
 
 #[derive(Parser)]
 #[command(name = "gs")]
@@ -19,6 +20,7 @@ enum Commands {
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    dotenv::dotenv().expect("Env konnte nicht gelesen werden!");
     tracing_subscriber::fmt().with_env_filter("debug,tower=trace").init();
     let cli = Cli::parse();
 
