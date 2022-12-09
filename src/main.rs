@@ -1,5 +1,5 @@
 mod web;
-mod reader;
+mod gpg;
 
 use clap::{Parser, Subcommand};
 use anyhow::{Context, Result};
