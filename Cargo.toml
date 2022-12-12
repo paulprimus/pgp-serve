@@ -17,4 +17,4 @@ tower-http = { version = "0.3", features = ["full"] }
 pgp = { version = "0.9" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = {version = "1.0" }
-dotenv = "0.15.0"
+dotenvy = {version = "0.15" }

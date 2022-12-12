@@ -1,6 +1,4 @@
 use anyhow::Result;
-use pgp::crypto::public_key;
-
 use tokio::fs;
 use tokio::io::AsyncReadExt;
 

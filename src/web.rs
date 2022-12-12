@@ -1,8 +1,8 @@
 use anyhow::Result;
 use axum::{
     body::{Body, BoxBody},
-    extract, http,
-    response::{IntoResponse, Response},
+    http,
+    response::{Response},
     routing::get,
     Json, Router,
 };
